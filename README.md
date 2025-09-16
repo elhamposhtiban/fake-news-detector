@@ -26,7 +26,7 @@ An AI-powered web application that uses machine learning and natural language pr
 
 - Node.js with Express
 - Apollo Server for GraphQL
-- PostgreSQL with Prisma ORM
+- PostgreSQL with raw SQL (pg)
 - Redis for caching
 - JWT for authentication
 
@@ -87,8 +87,9 @@ An AI-powered web application that uses machine learning and natural language pr
 
    ```bash
    cd server
-   npx prisma migrate dev
-   npx prisma generate
+   # Create your .env file with database credentials
+   # Then run the setup script to create tables
+   node db/setup.js
    ```
 
 5. **Start the development servers**
@@ -118,12 +119,16 @@ fake-news-detector/
 │   │   └── apollo/        # GraphQL client setup
 │   └── package.json
 ├── server/                # Node.js backend
-│   ├── src/
+│   ├── db/                # Database configuration and setup
+│   │   ├── index.js       # Database connection pool
+│   │   ├── setup.js       # Database setup script
+│   │   └── create_tables.sql # SQL schema
+│   ├── src/               # Source code (for future phases)
 │   │   ├── resolvers/     # GraphQL resolvers
 │   │   ├── services/      # Business logic
 │   │   ├── models/        # Database models
 │   │   └── utils/         # Utility functions
-│   ├── prisma/            # Database schema and migrations
+│   ├── server.js          # Main server file
 │   └── package.json
 ├── project-plan.test.js   # Comprehensive project plan
 └── README.md
@@ -141,17 +146,15 @@ fake-news-detector/
 ### Database Management
 
 ```bash
-# Generate Prisma client
-npx prisma generate
+# Set up database tables
+cd server
+node db/setup.js
 
-# Run database migrations
-npx prisma migrate dev
+# Test database connection
+node db/testDB.js
 
-# Reset database
-npx prisma migrate reset
-
-# View database in Prisma Studio
-npx prisma studio
+# View database in your preferred PostgreSQL client
+# (e.g., Postico, pgAdmin, etc.)
 ```
 
 ## 🤖 AI Models
@@ -247,7 +250,7 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 - [Hugging Face](https://huggingface.co/) for providing free AI models
 - [Material-UI](https://mui.com/) for the component library
 - [Apollo GraphQL](https://www.apollographql.com/) for the GraphQL implementation
-- [Prisma](https://www.prisma.io/) for the database ORM
+- [PostgreSQL](https://www.postgresql.org/) for the database
 
 ## 📞 Contact
 
