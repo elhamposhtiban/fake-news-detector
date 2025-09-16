@@ -1,0 +1,28 @@
+{
+  "name": "fake-news-detector",
+  "version": "1.0.0",
+  "description": "AI-powered fake news detection application using machine learning and natural language processing",
+  "main": "index.js",
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "npm run dev --prefix server",
+    "build": "npm run build --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elhamposhtiban/fake-news-detector.git"
+  },
+  "keywords": ["ai", "fake-news", "detection", "machine-learning", "nlp", "react", "nodejs", "graphql"],
+  "author": "Elham Poshtiban",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elhamposhtiban/fake-news-detector/issues"
+  },
+  "homepage": "https://github.com/elhamposhtiban/fake-news-detector#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "nodemon": "^3.1.10"
+  }
+}
