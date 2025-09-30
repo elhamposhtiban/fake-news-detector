@@ -1,70 +1,134 @@
-# Getting Started with Create React App
+# Fake News Detector Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React TypeScript application for detecting fake news using OpenAI GPT-4o Mini.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **Modern UI**: Built with Tailwind CSS and Lucide React icons
+- **TypeScript**: Full type safety throughout the application
+- **React Query**: Efficient data fetching and caching
+- **Responsive Design**: Works perfectly on desktop and mobile
+- **Real-time Analysis**: Instant fake news detection
+- **Budget Management**: Built-in API usage tracking
+- **Sample Texts**: Pre-loaded examples for testing
 
-### `npm start`
+## 📦 Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React 18** with TypeScript
+- **Tailwind CSS** for styling
+- **TanStack Query** (React Query) for data management
+- **Axios** for API calls
+- **Lucide React** for icons
+- **React Router** for navigation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Installation
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (v16 or higher)
+- npm or yarn
 
-### `npm run build`
+### Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Install dependencies:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Start development server:**
 
-### `npm run eject`
+   ```bash
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Open your browser:**
+   Navigate to `http://localhost:3000`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📁 Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+src/
+├── components/          # Reusable UI components
+├── hooks/              # Custom React hooks
+│   └── useAnalysis.ts  # Analysis logic hook
+├── services/           # API services
+│   └── apiClient.ts    # Axios configuration
+├── types/              # TypeScript type definitions
+├── utils/              # Utility functions
+├── mockData.ts         # Sample data for testing
+├── App.tsx             # Main application component
+├── index.tsx           # Application entry point
+└── index.css           # Global styles with Tailwind
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🎨 UI Components
 
-## Learn More
+### Main Features
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Text Input**: Multi-line textarea with send button
+- **Sample Buttons**: Quick test with pre-loaded examples
+- **Analysis Results**: Detailed breakdown with confidence scores
+- **Budget Status**: Real-time API usage tracking
+- **Error Handling**: User-friendly error messages
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Styling
 
-### Code Splitting
+- **Tailwind CSS**: Utility-first CSS framework
+- **Custom Components**: Reusable button and input styles
+- **Responsive Design**: Mobile-first approach
+- **Smooth Animations**: Fade-in and loading animations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🔧 Configuration
 
-### Analyzing the Bundle Size
+### Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Create a `.env` file in the root directory:
 
-### Making a Progressive Web App
+```bash
+REACT_APP_API_URL=http://localhost:5000/api
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Tailwind Configuration
 
-### Advanced Configuration
+The `tailwind.config.js` includes:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Custom color palette
+- Inter font family
+- Custom animations
+- Responsive breakpoints
 
-### Deployment
+## 🚀 Available Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- `npm start` - Start development server
+- `npm build` - Build for production
+- `npm test` - Run tests
+- `npm eject` - Eject from Create React App
 
-### `npm run build` fails to minify
+## 📱 Responsive Design
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The application is fully responsive and works on:
+
+- Desktop (1024px+)
+- Tablet (768px - 1023px)
+- Mobile (320px - 767px)
+
+## 🎯 Next Steps
+
+1. **Backend Integration**: Connect to OpenAI API
+2. **URL Support**: Add URL content extraction
+3. **History**: Implement analysis history
+4. **Authentication**: Add user accounts (optional)
+5. **Deployment**: Deploy to Vercel
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is open source and available under the MIT License.
