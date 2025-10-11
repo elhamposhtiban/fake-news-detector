@@ -1,4 +1,4 @@
-import pool from '../../db/index';
+import pool from '../db/index';
 import { z } from 'zod';
 
 // Zod schemas for validation
