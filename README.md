@@ -8,6 +8,8 @@ An AI-powered web application that uses machine learning and natural language pr
 - **URL Content Extraction**: Analyze content directly from URLs
 - **AI-Powered Detection**: Uses advanced NLP models for accurate detection
 - **Confidence Scoring**: Get detailed confidence scores and explanations
+- **Smart Caching**: Redis-powered caching reduces API costs and improves performance
+- **Rate Limiting**: Built-in protection against API abuse
 - **User Feedback**: Submit feedback to improve model accuracy
 - **Analysis History**: Track your previous analyses
 - **Modern UI**: Clean, responsive interface with dark/light mode
@@ -27,8 +29,9 @@ An AI-powered web application that uses machine learning and natural language pr
 - Node.js with Express
 - Apollo Server for GraphQL
 - PostgreSQL with raw SQL (pg)
-- Redis for caching
+- Redis Cloud for caching and rate limiting
 - JWT for authentication
+- OpenAI API for AI-powered analysis
 
 ### AI/ML
 
@@ -41,7 +44,8 @@ An AI-powered web application that uses machine learning and natural language pr
 - Frontend: Vercel
 - Backend: Railway
 - Database: Supabase
-- AI Models: Hugging Face Hub
+- Cache: Redis Cloud
+- AI Models: OpenAI API
 
 ## 🚀 Quick Start
 
@@ -50,6 +54,8 @@ An AI-powered web application that uses machine learning and natural language pr
 - Node.js (v18 or higher)
 - npm or yarn
 - PostgreSQL database
+- Redis Cloud account (free tier)
+- OpenAI API key
 
 ### Installation
 
@@ -77,10 +83,13 @@ An AI-powered web application that uses machine learning and natural language pr
 
    ```bash
    # Copy example environment files
-   cp server/.env.example server/.env
+   cp server/env.example server/.env
    cp client/.env.example client/.env
 
-   # Edit the .env files with your configuration
+   # Edit the .env files with your configuration:
+   # - Redis Cloud credentials
+   # - OpenAI API key
+   # - Database connection string
    ```
 
 4. **Set up the database**
@@ -102,8 +111,9 @@ An AI-powered web application that uses machine learning and natural language pr
    This will start:
 
    - Frontend on http://localhost:3000
-   - Backend on http://localhost:5000
-   - GraphQL Playground on http://localhost:5000/graphql
+   - Backend on http://localhost:5001
+   - GraphQL Playground on http://localhost:5001/graphql
+   - Redis connection test endpoint on http://localhost:5001/api/test-redis
 
 ## 📁 Project Structure
 
@@ -123,12 +133,16 @@ fake-news-detector/
 │   │   ├── index.js       # Database connection pool
 │   │   ├── setup.js       # Database setup script
 │   │   └── create_tables.sql # SQL schema
-│   ├── src/               # Source code (for future phases)
+│   ├── src/               # Source code
+│   │   ├── config.ts      # Environment configuration
+│   │   ├── server.ts      # Main server file
+│   │   ├── services/      # Business logic (Redis, OpenAI)
+│   │   ├── middleware/    # Rate limiting middleware
 │   │   ├── resolvers/     # GraphQL resolvers
-│   │   ├── services/      # Business logic
 │   │   ├── models/        # Database models
 │   │   └── utils/         # Utility functions
-│   ├── server.js          # Main server file
+│   ├── server.js          # Legacy server file
+│   ├── env.example        # Environment variables template
 │   └── package.json
 ├── project-plan.test.js   # Comprehensive project plan
 └── README.md
@@ -167,19 +181,23 @@ The application uses multiple AI models for robust fake news detection:
 
 ## 🔒 Security
 
-- Rate limiting (100 requests/hour per IP)
-- Input sanitization and validation
-- SQL injection prevention
-- XSS protection
-- CORS configuration
-- JWT-based authentication
+- **Rate Limiting**: 100 requests/hour per IP address
+- **Redis-powered Protection**: Efficient rate limiting with Redis Cloud
+- **Smart Caching**: Reduces API costs and prevents abuse
+- **Input Sanitization**: Comprehensive validation and sanitization
+- **SQL Injection Prevention**: Parameterized queries
+- **XSS Protection**: Content Security Policy headers
+- **CORS Configuration**: Secure cross-origin requests
+- **JWT Authentication**: Token-based authentication (coming soon)
 
 ## 📊 API Documentation
 
-### GraphQL Endpoints
+### API Endpoints
 
 - `POST /graphql` - Main GraphQL endpoint
 - `GET /graphql` - GraphQL Playground (development only)
+- `GET /api/health` - Health check endpoint
+- `GET /api/test-redis` - Redis connection test endpoint
 
 ### Key Queries
 
@@ -233,6 +251,13 @@ query UserAnalyses($limit: Int, $offset: Int) {
 2. Get the connection string
 3. Update your environment variables
 
+### Cache (Redis Cloud)
+
+1. Create a free Redis Cloud account
+2. Create a new database
+3. Get the connection details (host, port, password)
+4. Update your `.env` file with Redis credentials
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -247,7 +272,8 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- [Hugging Face](https://huggingface.co/) for providing free AI models
+- [OpenAI](https://openai.com/) for providing powerful AI models
+- [Redis Cloud](https://redis.com/) for free caching and rate limiting
 - [Material-UI](https://mui.com/) for the component library
 - [Apollo GraphQL](https://www.apollographql.com/) for the GraphQL implementation
 - [PostgreSQL](https://www.postgresql.org/) for the database
