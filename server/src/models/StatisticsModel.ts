@@ -136,7 +136,7 @@ export class StatisticsModel {
     const validatedId = StatisticsIdSchema.parse(id);
     const query = 'DELETE FROM statistics WHERE id = $1';
     const result = await pool.query(query, [validatedId]);
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Recalculate statistics from analyses table
