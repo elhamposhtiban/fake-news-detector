@@ -1,11 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import { createServer } from 'http';
 import { config } from './config';
 import { testRedisConnection } from './services/redis';
 import { apiRateLimit } from './middleware/rateLimit';
+import { createApolloServer, createApolloMiddleware, graphqlHealthCheck } from './graphql/server';
 
 const app = express();
+const httpServer = createServer(app);
 
 // Middleware
 app.use(helmet());
@@ -63,12 +66,18 @@ app.get('/api/test-redis', async (req, res) => {
   }
 });
 
-// Placeholder GraphQL endpoint
-app.post('/graphql', (req, res) => {
-  res.json({ 
-    message: 'GraphQL endpoint - coming soon!',
-    data: null
-  });
+// GraphQL health check endpoint
+app.get('/api/graphql-health', async (req, res) => {
+  try {
+    const health = await graphqlHealthCheck(apolloServer);
+    res.json(health);
+  } catch (error: any) {
+    res.status(500).json({
+      status: 'unhealthy',
+      message: `GraphQL health check failed: ${error.message}`,
+      error: error.message
+    });
+  }
 });
 
 // Error handling middleware
@@ -80,15 +89,40 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
-// Start server
-app.listen(config.port, async () => {
-  console.log(`🚀 Server running on http://localhost:${config.port}`);
-  console.log(`📊 Health check: http://localhost:${config.port}/api/health`);
-  console.log(`🔗 GraphQL endpoint: http://localhost:${config.port}/graphql`);
-  console.log(`🌍 Environment: ${config.nodeEnv}`);
-  
-  // Test Redis connection
-  await testRedisConnection();
-});
+// Initialize Apollo Server and start the server
+const startServer = async () => {
+  try {
+    // Create Apollo Server
+    const apolloServer = await createApolloServer(httpServer);
+    
+    // Start Apollo Server
+    await apolloServer.start();
+    
+    // Apply Apollo Server middleware to Express
+    app.use('/graphql', createApolloMiddleware(apolloServer));
+    
+    // Start HTTP server
+    httpServer.listen(config.port, async () => {
+      console.log(`🚀 Server running on http://localhost:${config.port}`);
+      console.log(`📊 Health check: http://localhost:${config.port}/api/health`);
+      console.log(`🔗 GraphQL endpoint: http://localhost:${config.port}/graphql`);
+      console.log(`🎮 GraphQL Playground: http://localhost:${config.port}/graphql`);
+      console.log(`🔍 GraphQL Health: http://localhost:${config.port}/api/graphql-health`);
+      console.log(`🌍 Environment: ${config.nodeEnv}`);
+      
+      // Test Redis connection
+      await testRedisConnection();
+      
+      console.log('✅ Apollo Server started successfully!');
+    });
+    
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
+  }
+};
+
+// Start the server
+startServer();
 
 export default app;
