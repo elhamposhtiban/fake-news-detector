@@ -203,7 +203,7 @@ export const analysisResolvers = {
         // Save to database
         const savedAnalysis = await AnalysisModel.create({
           text_content: mockAnalysis.textContent,
-          url: mockAnalysis.url,
+          url: mockAnalysis.url || undefined,
           is_fake: mockAnalysis.isFake,
           confidence: mockAnalysis.confidence,
           explanation: mockAnalysis.explanation,
@@ -225,8 +225,6 @@ export const analysisResolvers = {
             model_used: mockAnalysis.modelUsed
           }
         });
-
-        // Update budget tracking (mock cost)
         await BudgetModel.addCost(0.001); // $0.001 per analysis
 
         // Update statistics

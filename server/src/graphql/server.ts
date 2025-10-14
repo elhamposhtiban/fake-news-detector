@@ -35,18 +35,6 @@ export const createApolloServer = async (httpServer: Server) => {
       ApolloServerPluginInlineTrace()
     ],
     
-    // Context function - provides context to all resolvers
-    context: async ({ req, res }: { req: Request; res: Response }) => {
-      return {
-        // Add any context data here (user info, database connections, etc.)
-        req,
-        res,
-        // You can add user authentication, database connections, etc.
-        // user: await getUserFromToken(req.headers.authorization),
-        // db: databaseConnection,
-      };
-    },
-    
     // Error formatting
     formatError: (error) => {
       console.error('GraphQL Error:', error);

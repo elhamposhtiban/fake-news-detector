@@ -149,7 +149,7 @@ export class BudgetModel {
     const validatedId = BudgetIdSchema.parse(id);
     const query = 'DELETE FROM budget_tracking WHERE id = $1';
     const result = await pool.query(query, [validatedId]);
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   // Add cost to current month's budget
@@ -169,10 +169,14 @@ export class BudgetModel {
         percentage_used: (validatedAmount / 25) * 100
       });
     } else {
+      // Convert database string values to numbers
+      const currentTotalUsed = parseFloat(budget.total_used.toString());
+      const currentTotalRemaining = parseFloat(budget.total_remaining.toString());
+      
       // Update existing budget
-      const newTotalUsed = budget.total_used + validatedAmount;
-      const newTotalRemaining = budget.total_remaining - validatedAmount;
-      const newPercentageUsed = (newTotalUsed / (newTotalUsed + newTotalRemaining)) * 100;
+      const newTotalUsed = currentTotalUsed + validatedAmount;
+      const newTotalRemaining = currentTotalRemaining - validatedAmount;
+      const newPercentageUsed = (newTotalUsed / 25) * 100; // Fixed calculation
       
       budget = await this.update(budget.id, {
         total_used: newTotalUsed,

@@ -4,7 +4,7 @@ import { z } from 'zod';
 // Zod schemas for validation
 export const CreateAnalysisSchema = z.object({
   text_content: z.string().min(1, 'Text content is required').max(10000, 'Text content too long'),
-  url: z.string().url('Invalid URL format').optional().or(z.literal('')),
+  url: z.string().optional().nullable(),
   is_fake: z.boolean(),
   confidence: z.number().min(0, 'Confidence must be at least 0').max(1, 'Confidence must be at most 1'),
   explanation: z.string().min(1, 'Explanation is required').max(2000, 'Explanation too long'),
@@ -15,7 +15,7 @@ export const CreateAnalysisSchema = z.object({
 
 export const UpdateAnalysisSchema = z.object({
   text_content: z.string().min(1, 'Text content is required').max(10000, 'Text content too long').optional(),
-  url: z.string().url('Invalid URL format').optional().or(z.literal('')),
+  url: z.string().optional(),
   is_fake: z.boolean().optional(),
   confidence: z.number().min(0, 'Confidence must be at least 0').max(1, 'Confidence must be at most 1').optional(),
   explanation: z.string().min(1, 'Explanation is required').max(2000, 'Explanation too long').optional(),
@@ -196,7 +196,7 @@ export class AnalysisModel {
     const validatedId = AnalysisIdSchema.parse(id);
     const query = 'DELETE FROM analyses WHERE id = $1';
     const result = await pool.query(query, [validatedId]);
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   // Get analysis statistics

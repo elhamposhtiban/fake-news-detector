@@ -185,8 +185,8 @@ export const cacheResolvers = {
         }
 
         return {
-          text: cached.text || text,
-          url: cached.url || url,
+          text: text,
+          url: url,
           isFake: cached.is_fake,
           confidence: cached.confidence,
           explanation: cached.explanation,

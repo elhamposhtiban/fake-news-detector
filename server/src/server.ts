@@ -69,6 +69,7 @@ app.get('/api/test-redis', async (req, res) => {
 // GraphQL health check endpoint
 app.get('/api/graphql-health', async (req, res) => {
   try {
+    const apolloServer = await createApolloServer(httpServer);
     const health = await graphqlHealthCheck(apolloServer);
     res.json(health);
   } catch (error: any) {

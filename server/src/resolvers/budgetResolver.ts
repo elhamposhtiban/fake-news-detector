@@ -126,7 +126,21 @@ export const budgetResolvers = {
     // Get current month's budget
     getCurrentMonthBudget: async () => {
       try {
-        return await BudgetModel.getCurrentMonth();
+        const currentBudget = await BudgetModel.getCurrentMonth();
+        
+        // If no budget exists for current month, create a default one
+        if (!currentBudget) {
+          const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM format
+          const defaultBudget = await BudgetModel.create({
+            month_year: currentMonth,
+            total_used: 0,
+            total_remaining: 25.0, // Default $25 budget
+            percentage_used: 0
+          });
+          return defaultBudget;
+        }
+        
+        return currentBudget;
       } catch (error: any) {
         throw new Error(`Failed to get current month budget: ${error.message}`);
       }

@@ -14,7 +14,7 @@ const FakeNewsDetector: React.FC = () => {
   const [inputText, setInputText] = useState("");
   const [analysisResult, setAnalysisResult] = useState<Analysis | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { analyzeText, budgetStatus } = useAnalysis();
+  const { analyzeText } = useAnalysis();
 
   const handleAnalyze = async () => {
     if (!inputText.trim()) return;
@@ -150,24 +150,25 @@ const FakeNewsDetector: React.FC = () => {
               </div>
 
               {/* Suspicious Phrases */}
-              {analysisResult.suspiciousPhrases.length > 0 && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    Suspicious Phrases
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {analysisResult.suspiciousPhrases.map((phrase, index) => (
-                      <span
-                        key={index}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200"
-                      >
-                        <AlertCircleIcon className="w-4 h-4 mr-1" />
-                        {phrase}
-                      </span>
-                    ))}
+              {analysisResult.suspiciousPhrases &&
+                analysisResult.suspiciousPhrases.length > 0 && (
+                  <div className="mb-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      Suspicious Phrases
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {analysisResult.suspiciousPhrases.map((phrase, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200"
+                        >
+                          <AlertCircleIcon className="w-4 h-4 mr-1" />
+                          {phrase}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Recommendations */}
               <div>
