@@ -26,7 +26,22 @@ export const apolloClient = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          analyses: {
+          getAllAnalyses: {
+            merge(existing = [], incoming) {
+              return [...existing, ...incoming];
+            },
+          },
+          getAnalysesByFakeStatus: {
+            merge(existing = [], incoming) {
+              return [...existing, ...incoming];
+            },
+          },
+          searchAnalyses: {
+            merge(existing = [], incoming) {
+              return [...existing, ...incoming];
+            },
+          },
+          getRecentAnalyses: {
             merge(existing = [], incoming) {
               return [...existing, ...incoming];
             },

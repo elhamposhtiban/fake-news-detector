@@ -8,13 +8,11 @@ import {
   AlertCircle as AlertCircleIcon,
 } from "lucide-react";
 import { useAnalysis } from "./hooks/useAnalysis";
-import { AnalysisResult } from "./graphql/queries";
+import { Analysis } from "./graphql";
 
 const FakeNewsDetector: React.FC = () => {
   const [inputText, setInputText] = useState("");
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
-    null
-  );
+  const [analysisResult, setAnalysisResult] = useState<Analysis | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { analyzeText, budgetStatus } = useAnalysis();
 
